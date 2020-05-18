@@ -4,53 +4,84 @@
     <meta charset="UTF-8">
     <title>function integrator</title>
 
-    <script type="text/javascript" src="/eel.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-        body { font-family: 'Montserrat', sans-serif; }
-    </style>
-
+    <script src="/eel.js" type="text/javascript"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container-fluid">
-<form>
-  <div class="form-group">
-    <label for="inputFunction">Function</label>
-    <input type="text" class="form-control" id="inputFunction" aria-describedby="inputFunctionHelp" placeholder="Enter function">
-    <small id="inputFunctionHelp" class="form-text text-muted">Univariate function to integrate.</small>
-  </div>
-  <div class="form-group">
-    <label for="lowerBound">Lower</label>
-    <input type="text" class="form-control" id="lowerBound" placeholder="Lower bound">
-  </div>
-      <div class="form-group">
-    <label for="upperBound">Upper</label>
-    <input type="text" class="form-control" id="upperBound" placeholder="Upper bound">
-  </div>
-    <input id="integrate-button" class="btn btn-primary" type="button" value="Integrate">
-</form>
+<div class="container-fluid problem-solution-section">
+    <div class="card card-body bg-light">
+        <form>
+            <div class="form-group">
+                <label for="inputFunctionForLimit">f(x)</label>
+                <input class="form-control" id="inputFunctionForLimit" placeholder="Enter function" type="text">
+            </div>
+            <div class="form-group">
+                <label for="limitPoint">Limit point</label>
+                <input class="form-control" id="limitPoint" placeholder="Limit point" type="text">
+            </div>
+            <input class="btn btn-primary" id="limit-button" type="button" value="Find limit">
+        </form>
+    </div>
 </div>
-<div id="function"></div>
-<div id="ans"></div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="mathjax-config.js" defer></script>
-<script type="text/javascript" id="MathJax-script" defer
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+<div class="container-fluid problem-solution-section">
+    <div class="card card-body bg-light">
+        <form>
+            <div class="form-group">
+                <label for="inputFunction">f(x)</label>
+                <input class="form-control" id="inputFunction" placeholder="Enter function" type="text">
+            </div>
+            <div class="form-group">
+                <label for="lowerBound">Lower</label>
+                <input class="form-control" id="lowerBound" placeholder="Lower bound" type="text">
+            </div>
+            <div class="form-group">
+                <label for="upperBound">Upper</label>
+                <input class="form-control" id="upperBound" placeholder="Upper bound" type="text">
+            </div>
+            <input class="btn btn-primary" id="integrate-button" type="button" value="Integrate">
+        </form>
+    </div>
+</div>
+<div class="container-fluid problem-solution-section">
+    <div class="card card-body bg-light">
+        <div id="ans"></div>
+    </div>
+</div>
+
+<script crossorigin="anonymous"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script defer src="mathjax-config.js"></script>
+<script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+        type="text/javascript">
 </script>
 <script src="typesetter.js"></script>
 <script type="text/javascript">
-    $('#integrate-button').on('click', function(event) {
+    $('#limit-button').on('click', function (event) {
+        event.preventDefault();
+        const f = $('#inputFunctionForLimit').val();
+        const limit_point = $('#limitPoint').val();
+
+        eel.limit_function(f, limit_point)(typesetAnswer)
+    });
+
+    $('#integrate-button').on('click', function (event) {
         event.preventDefault();
         const f = $('#inputFunction').val();
         const a = $('#lowerBound').val();
         const b = $('#upperBound').val();
-        eel.function_to_latex_integral(f, a, b)(typesetFunction)
-        eel.integrate_function(f, a, b)(typesetAnswer)
+
+        eel.integrate_function(f, a, b)(typesetAnswer);
     });
 </script>
 </body>

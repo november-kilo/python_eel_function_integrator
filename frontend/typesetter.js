@@ -1,11 +1,11 @@
-let promise = Promise.resolve();  // Used to hold chain of typesetting calls
+let typesettingPromise = Promise.resolve();  // Used to hold chain of typesetting calls
 
 function typeset(code) {
-  promise = promise.then(() => {
+  typesettingPromise = typesettingPromise.then(() => {
       code();
       return MathJax.typesetPromise()
   }).catch((err) => console.log('Typeset failed: ' + err.message));
-  return promise;
+  return typesettingPromise;
 }
 
 function typesetAnswer(ans) {
@@ -13,13 +13,5 @@ function typesetAnswer(ans) {
       const math = document.querySelector('#ans');
       math.innerHTML = '$$' + ans + '$$';
       return math;
-    });
-}
-
-function typesetFunction(f) {
-    typeset(() => {
-        const math = document.querySelector('#function');
-        math.innerHTML = '$$' + f + '$$';
-        return math;
     });
 }
